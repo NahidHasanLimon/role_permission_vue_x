@@ -1,13 +1,13 @@
 <template>
 <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col">
-  <form action="#" @submit.prevent="submit">
+  <form action="#" @submit.prevent="submit" method="post">
     <div>
       <label for="email">Email address</label>
-      <input type="text" name="email" id="email" class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker">
+      <input type="text" name="email" id="email" class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker" v-model="form.email">
     </div>
     <div>
       <label for="password">Password</label>
-      <input type="text" name="password" id="password" class="shadow appearance-none border border-red rounded w-full py-2 px-3 text-grey-darker mb-3">
+      <input type="text" name="password" id="password" class="shadow appearance-none border border-red rounded w-full py-2 px-3 text-grey-darker mb-3" v-model="form.password">
     </div>
     <div>
     <div class="flex items-center justify-between">
@@ -50,7 +50,7 @@
       async submit () {
         await this.signIn(this.form)
 
-        this.$router.replace({ name: 'home' })
+        this.$router.replace({ name: 'Home' })
       }
     }
   }

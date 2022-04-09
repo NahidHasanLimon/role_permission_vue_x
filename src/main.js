@@ -8,8 +8,16 @@ axios.defaults.withCredentials = true
 axios.defaults.baseURL = 'http://localhost:8000/'
 
 // createApp(App).use([router,store]).mount('#app')
-const app = createApp(App)
-// app.config.globalProperties.$axios = axios;
-app.use(router)
-app.use(store)
-app.mount('#app')
+// const app = createApp(App)
+// // app.config.globalProperties.$axios = axios;
+// app.use(router)
+// app.use(store)
+// app.mount('#app')
+
+
+store.dispatch('auth/me').then(() => {
+    const app = createApp(App)
+    app.use(store)
+    app.use(router)
+    app.mount('#app')
+  })
