@@ -1,6 +1,6 @@
 <template>
-  <div>
-    Home
+  <div style="padding:35px;">
+    <h1 style=" text-align: center;">Home</h1>
   </div>
 </template>
 

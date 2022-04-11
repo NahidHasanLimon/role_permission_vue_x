@@ -33,15 +33,28 @@ export default {
   actions: {
     async signIn ({ dispatch }, credentials) {
       await axios.get('/sanctum/csrf-cookie')
-      await axios.post('/login', credentials)
-
-      return dispatch('me')
+      await axios.post('/login', credentials).then((response) => {
+        console.log('From Sign in action')
+        if(response.data.success){
+          return dispatch('me')
+        }
+      }).catch(() => {
+      })
+      // console.log()
+      
     },
 
     async signOut ({ dispatch }) {
-      await axios.post('/logout')
+      await axios.post('/logout').then(()=>{
+          console.log('From signout action')
+          return dispatch('me')
+          
+        }
+      ).catch(()=>{
+        console.log('From signout action error')
+      })
 
-      return dispatch('me')
+      // return dispatch('me')
     },
 
     me ({ commit }) {
