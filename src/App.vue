@@ -45,8 +45,7 @@
 
       async signOut () {
         await this.signOutAction()
-
-        this.$router.replace({ name: 'Home' })
+        this.$router.replace({ name: 'SignIn' })
       }
     }
   }
