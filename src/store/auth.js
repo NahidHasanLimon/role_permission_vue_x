@@ -47,14 +47,14 @@ export default {
     async signOut ({ dispatch }) {
       await axios.post('/logout').then(()=>{
           console.log('From signout action')
-          return dispatch('me')
+          if(response.data.success){
+            return dispatch('me')
+          }
           
         }
       ).catch(()=>{
         console.log('From signout action error')
       })
-
-      // return dispatch('me')
     },
 
     me ({ commit }) {
