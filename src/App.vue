@@ -13,8 +13,14 @@
         <router-link class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4" to="/signin">Sign in</router-link> |
       </template>
       <template v-else>
-        <router-link class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white" to="/account">{{ user.name }}</router-link>
+        <router-link class="block mx-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white" to="/account">{{ user.name }}</router-link>
       </template>
+      <slot>
+        | <router-link class="block mx-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4" to="/permission">Permission</router-link>
+      </slot>
+      <slot>
+        | <router-link class="block mx-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4" to="/rental">Rental</router-link>
+      </slot>
     </div>
     <div>
       <template v-if="authenticated">

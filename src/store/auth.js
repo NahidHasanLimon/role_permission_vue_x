@@ -42,7 +42,7 @@ export default {
       await axios.post('/login', credentials).then((response) => {
         console.log('From Sign in action')
         if(response.data.success){
-          dispatch('permission/systemPermission', null, { root: true })
+         
           return dispatch('me')
         }
       }).catch(() => {
@@ -51,23 +51,34 @@ export default {
       
     },
 
-    async signOut ({ dispatch }) {
+    async signOut ({ dispatch,commit }) {
       await axios.post('/logout').then((response)=>{
           console.log('From signout action')
           if(response.data.success){
             console.log('Signout successfully.')
-            return dispatch('me')
+            // return dispatch('me')
+            commit('SET_AUTHENTICATED', false)
+            commit('SET_USER', null)
+            
+            commit('permission/SET_SYSTEM_PERMISSIONS',null, { root: true })
           }
         }).catch(()=>{
         console.log('From signout action error')
       })
     },
 
-    me ({ commit }) {
+    me ({ dispatch,commit }) {
       return axios.get('/api/user').then((response) => {
+        console.log(response.data);
+        dispatch('permission/systemPermission', response.data.modules, { root: true })
+
+        console.log('user permissions are: '+response.data.user['permissions']);
+        dispatch('permission/userPermission', response.data.user['permissions'], { root: true })
+        
         commit('SET_AUTHENTICATED', true)
-        commit('SET_USER', response.data)
+        commit('SET_USER', response.data.user)
       }).catch(() => {
+
         commit('SET_AUTHENTICATED', false)
         commit('SET_USER', null)
       })
