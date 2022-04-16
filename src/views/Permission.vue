@@ -11,12 +11,12 @@
            
             <form @submit.prevent="submit_user_permission" method="post">
                 <div class="block p-6 rounded-lg shadow-lg bg-white mb-2" v-for="permission of permissions" :key="permission.id">
-                    <h6 class="text-gray-900 text-xl leading-tight font-medium mb-2 text-center">{{permission.id}}  - {{permission.name}}</h6>
+                    <h6 class="text-gray-900 text-xl leading-tight font-medium mb-2 text-center"> {{permission.name}}</h6>
                     <template v-if="permission.sub_modules.length > 0"  >
                         <div class="flex justify-start">
                         <div class="form-check form-check-inline mr-2" v-for="sub_permission in permission.sub_modules" :key="sub_permission.id">
                             <input class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="checkbox" id="inlineCheckbox{{sub_permission.id}}" :value="sub_permission.id"  v-model="selected_permissions" >
-                            <label class="form-check-label inline-block text-gray-800" for="inlineCheckbox{{subm}}"> {{sub_permission.name}} - {{sub_permission.id}}</label>
+                            <label class="form-check-label inline-block text-gray-800" for="inlineCheckbox{{subm}}"> {{sub_permission.name}}</label>
                         </div>
                         </div>
                     </template>
