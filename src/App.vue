@@ -18,6 +18,7 @@
       <slot>
         | <router-link class="block mx-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4" to="/permission">Permission</router-link>
       </slot>
+      <!-- v-if="!$checkAccess('rem.sunt','AND','nam.eos','AND','rem.sunt')" -->
       <slot>
         | <router-link class="block mx-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4" to="/rental">Rental</router-link>
       </slot>
@@ -28,6 +29,8 @@
       </template>
     </div>
   </div>
+  <!-- <div v-html="$italicHTML('whats wrong what the hell i am checking')"></div> -->
+  <!-- <div v-html="$checkAccess('rem.sunt','AND','nam.eos','AND','rem.sunt')"></div> -->
 </nav>
     <router-view/>
   </div>
@@ -53,6 +56,11 @@
         await this.signOutAction()
         this.$router.replace({ name: 'SignIn' })
       }
+    },
+     created() {
+        console.log('App Component')
+        // console.log($this.acces)
+        console.log(this);
     }
   }
 </script>

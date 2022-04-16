@@ -1,8 +1,14 @@
 <template>
        <div class="container mx-auto px-4 block p-6 rounded-lg shadow-lg bg-white mb-4">
-           {{userPermissions}}
-           {{this.selected_permissions}}
-            <h6 class=" text-center text-5xl font-bold mt-0 mb-6">System Permissions</h6>
+          <h6 class=" text-center text-5xl font-bold mt-0 mb-6">System Permissions</h6>
+         <div class="flex justify-start space-x-4">
+              <AddPermission :all_modules = "all_modules" @custom_event='refreshPermissions'/>
+              <AddPermissionModule @custom_event='refreshPermissions'/>
+         </div>
+      
+           <!-- {{userPermissions}}
+           {{this.selected_permissions}} -->
+           
             <form @submit.prevent="submit_user_permission" method="post">
                 <div class="block p-6 rounded-lg shadow-lg bg-white mb-2" v-for="permission of permissions" :key="permission.id">
                     <h6 class="text-gray-900 text-xl leading-tight font-medium mb-2 text-center">{{permission.id}}  - {{permission.name}}</h6>
@@ -31,16 +37,24 @@
     
 </template>
 <script>
- import { EMPTY_ARR } from '@vue/shared';
 import { mapGetters, mapActions } from 'vuex'
- 
+import AddPermission from '../components/AddPermission.vue';
+import AddPermissionModule from '../components/AddPermissionModule.vue';
+
   export default {
+    name: 'Permission',
+    components: {
+     AddPermission,
+     AddPermissionModule
+    },
     data () {
     return {
         // selected_permissions:[1,2,3,4],
         selected_permissions: [],
+        all_modules: [],
      }
     },
+   
     computed: {
       ...mapGetters({
         permissions: 'permission/system_permissions',
@@ -51,18 +65,25 @@ import { mapGetters, mapActions } from 'vuex'
     mounted() {
         if(this.userPermissions !== null){
             this.selected_permissions = this.userPermissions;
+            this.all_modules = this.permissions;
+            // console.log('From mounted'+this.permissions);
         }
         // this.selected_permissions = []
     } ,
      methods: {
       ...mapActions({
-        setUserPermission: 'permission/setUserPermission'
+        setUserPermission: 'permission/setUserPermission',
+        me: 'auth/me'
       }),
 
       async submit_user_permission () {
         const formData = new FormData()
         formData.append('permissions',JSON.stringify(this.selected_permissions) );
         await this.setUserPermission(formData)
+      },
+       refreshPermissions(){
+         console.log('From Refresh Permissions')
+          this.me()
       }
     },
     created() {
