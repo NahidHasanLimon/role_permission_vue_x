@@ -22,7 +22,7 @@ axios.defaults.baseURL = 'http://localhost:8000/'
 store.dispatch('auth/me').then(() => {
     const app = createApp(App)
     app.use(store)
-    app.use(router)
+    app.use(router,app)
     app.use(access)
     // app.use(hasPermission('kk.l'))
     // app.use(axios)
@@ -31,3 +31,4 @@ store.dispatch('auth/me').then(() => {
 
    
   })
+  // export { app }

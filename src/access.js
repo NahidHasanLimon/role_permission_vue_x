@@ -1,14 +1,15 @@
 import store from './store'
 export default {
   install: (app, options) => {
-            app.config.globalProperties.$italicHTML = function (text) {
-              return "<i>" + text + "</i>";
-            };
+            
             app.config.globalProperties.$checkAccess = function (...allowed) {
               let sp = store.getters['permission/system_permissions']
               let up = store.getters['permission/user_permissions']
               let final_state = false;
               let returned_result = [];
+              if(sp == '' || sp == null){
+                return false;
+              }
               if(allowed.length %2 ==0 ){
                 throw new TypeError("Parameter must be odd.")
               }

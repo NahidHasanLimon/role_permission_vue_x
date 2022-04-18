@@ -9,8 +9,9 @@ import NotFound from '../views/NotFound.vue'
 import store from '../store'
 import {hasPermission} from '../permission'
 // import access from '../access'
-
-const routes = [
+// import {app} from '../main'
+import {  getCurrentInstance } from "vue";
+const routes  =  [
   {
     path: '/',
     name: 'Home',
@@ -35,12 +36,15 @@ const routes = [
     path: '/rental',
     name: 'Rental',
     component: Rental,
-    beforeEnter(to,from){
-      // console.log('From before enter: '+access.checkAccess)
-      if(!hasPermission('rem.aliquam')){
-        // alert('sorry')
-        return false
-      }
+    beforeEnter (to, from) {
+      console.log('Why this kolavery di');
+      // console.log('what .............. '+getCurrentInstance().appContext.config.globalProperties.$checkAccess)
+      console.log('what .............. '+getCurrentInstance())
+      
+      // next(vm => {
+      //   // access to component instance via `vm`
+      //   console.log(vm.$keycloak.authenticated);
+      // })
     }
 
     
@@ -56,25 +60,62 @@ const router = createRouter({
     routes: routes,
     
 });
+// export const createRouter = (app) => {
+//   return createVueRouter({
+//     history: createWebHistory(),
+//     routes: createRoutes(app), 👈
+//   })
+// }
 
 
-router.beforeEach( (to, from, next) => {
-  // console.log('WHATTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT'+this.a) 
-  // console.log(router.app)
-  // console.log('this is: '+this.$router)
-  // console.log(app.config.globalProperties.$store)
-  console.log('inside before each is authenticated: '+store.getters['auth/authenticated'])
-  console.log('Route From:  '+from.fullPath)
-  console.log('Route to:  '+to.fullPath)
-  console.log('Route to Name:  '+to.name)
-  console.log('Route From Name:  '+from.fullPath)
+// router.beforeEach( (to, from, next) => {
+//   // console.log('what defined: '+ JSON.stringify(router))
+//   // console.log('WHATTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT'+this.a) 
+//   // console.log(router.app)
+//   // console.log('this is: '+this.$router)
+//   // console.log(app.config.globalProperties.$store)
+//   console.log('inside before each is authenticated: '+store.getters['auth/authenticated'])
+//   console.log('Route From:  '+from.fullPath)
+//   console.log('Route to:  '+to.fullPath)
+//   console.log('Route to Name:  '+to.name)
+//   console.log('Route From Name:  '+from.fullPath)
 
-console.log('Route From:  '+from.fullPath)
-  let isAuthenticated = store.getters['auth/authenticated']
-  if (!isAuthenticated){
+// console.log('Route From:  '+from.fullPath)
+//   let isAuthenticated = store.getters['auth/authenticated']
+//   if (!isAuthenticated){
+//     if(to.name != 'SignIn') next({ name: 'SignIn' })
+//       next()
+//   }else{
+//     if(to.name == 'SignIn'){
+//       console.log('authenticated and trying to enter sign in route')
+//       next({ name: 'Home' })
+//     }
+//     else{
+//       next()
+//     }
+    
+//   }  
+//   // if the user is not authenticated, `next` is called twice
+//   // async
+ 
+// })
+
+
+// export default router;
+
+
+// export default router
+
+export default {
+  install(app, options) {
+      router.install(app)
+      router.beforeEach((to, from, next) => {
+      console.log('Route From:  '+from.fullPath)
+    let isAuthenticated = store.getters['auth/authenticated']
+    if (!isAuthenticated){
     if(to.name != 'SignIn') next({ name: 'SignIn' })
       next()
-  }else{
+    }else{
     if(to.name == 'SignIn'){
       console.log('authenticated and trying to enter sign in route')
       next({ name: 'Home' })
@@ -87,10 +128,7 @@ console.log('Route From:  '+from.fullPath)
   // if the user is not authenticated, `next` is called twice
   // async
  
-})
-
-
-export default router;
-
-
-// export default router
+          // ... stuff ...
+      });
+  },
+};
