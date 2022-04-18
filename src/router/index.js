@@ -1,5 +1,5 @@
 // import Vue from 'vue'
-import {createWebHistory, createRouter} from "vue-router";
+import {createWebHistory, createRouter as createVueRouter} from "vue-router";
 import Home from '../views/Home.vue'
 import SignIn from '../views/SignIn.vue'
 import Account from '../views/Account.vue'
@@ -10,7 +10,7 @@ import store from '../store'
 
 
 
-const routes  =  [
+const routes  = (app) => [
   {
     path: '/',
     name: 'Home',
@@ -36,7 +36,8 @@ const routes  =  [
     name: 'Rental',
     component: Rental,
     beforeEnter (to, from) {
-      console.log('Why this kolavery di');
+      console.log('Why this kolavery di: '+app.config.globalProperties.$checkAccess('rem.okay'));
+      // console.log('Why this kolavery di'+app.config.globalProperties.$checkAccess('Finally.YEs'));
     }
 
     
@@ -47,46 +48,46 @@ const routes  =  [
     name: 'NotFound', component: NotFound 
   }
 ]
-const router = createRouter({
+// const router = createRouter({
+//     history: createWebHistory(),
+//     routes: routes,
+    
+// });
+
+ export const createRouter = (app) => {
+  const router =  createVueRouter({
     history: createWebHistory(),
-    routes: routes,
-    
-});
-
-
-router.beforeEach( (to, from, next) => {
-  // console.log('WHATTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT'+this.a) 
-  // console.log(router.app)
-  // console.log('this is: '+this.$router)
-  // console.log(app.config.globalProperties.$store)
-  console.log('inside before each is authenticated: '+store.getters['auth/authenticated'])
+    routes: routes(app),
+  })
+  router.beforeEach( (to, from, next) => {
+  
   console.log('Route From:  '+from.fullPath)
-  console.log('Route to:  '+to.fullPath)
-  console.log('Route to Name:  '+to.name)
-  console.log('Route From Name:  '+from.fullPath)
-
-console.log('Route From:  '+from.fullPath)
-  let isAuthenticated = store.getters['auth/authenticated']
-  if (!isAuthenticated){
-    if(to.name != 'SignIn') next({ name: 'SignIn' })
-      next()
-  }else{
-    if(to.name == 'SignIn'){
-      console.log('authenticated and trying to enter sign in route')
-      next({ name: 'Home' })
-    }
-    else{
-      next()
-    }
+    let isAuthenticated = store.getters['auth/authenticated']
+    if (!isAuthenticated){
+      if(to.name != 'SignIn') next({ name: 'SignIn' })
+        next()
+    }else{
+      if(to.name == 'SignIn'){
+        console.log('authenticated and trying to enter sign in route')
+        next({ name: 'Home' })
+      }
+      else{
+        next()
+      }
+      
+    }  
+    // if the user is not authenticated, `next` is called twice
+    // async
     
-  }  
-  // if the user is not authenticated, `next` is called twice
-  // async
- 
-})
+   
+  })
+  return router;
+}
 
 
-export default router;
+
+
+// export default createRouter;
 
 
 // export default router

@@ -7,8 +7,12 @@ export default {
             app.config.globalProperties.$checkAccess = function (...allowed) {
               let sp = store.getters['permission/system_permissions']
               let up = store.getters['permission/user_permissions']
+              if(sp == '' || sp == null){
+                return false;
+              }
               let final_state = false;
               let returned_result = [];
+
               if(allowed.length %2 ==0 ){
                 throw new TypeError("Parameter must be odd.")
               }
