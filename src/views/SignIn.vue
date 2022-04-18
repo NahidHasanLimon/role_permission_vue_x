@@ -1,6 +1,6 @@
 <template>
-<div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col">
-  <form action="#" @submit.prevent="submit" method="post">
+<div class=" items-center h-screen bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col">
+  <form class="" action="#" @submit.prevent="submit" method="post">
     <div>
       <label for="email">Email address</label>
       <input type="text" name="email" id="email" class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker" v-model="form.email">
