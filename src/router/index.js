@@ -7,10 +7,10 @@ import Permission from '../views/Permission.vue'
 import Rental from '../views/Rental.vue'
 import NotFound from '../views/NotFound.vue'
 import store from '../store'
-import {hasPermission} from '../permission'
-// import access from '../access'
 
-const routes = [
+
+
+const routes  =  [
   {
     path: '/',
     name: 'Home',
@@ -35,12 +35,8 @@ const routes = [
     path: '/rental',
     name: 'Rental',
     component: Rental,
-    beforeEnter(to,from){
-      // console.log('From before enter: '+access.checkAccess)
-      if(!hasPermission('rem.aliquam')){
-        // alert('sorry')
-        return false
-      }
+    beforeEnter (to, from) {
+      console.log('Why this kolavery di');
     }
 
     
@@ -94,3 +90,4 @@ export default router;
 
 
 // export default router
+
