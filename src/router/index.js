@@ -7,6 +7,9 @@ import Permission from '../views/Permission.vue'
 import Rental from '../views/Rental.vue'
 import NotFound from '../views/NotFound.vue'
 import store from '../store'
+import auth from '../middleware/auth'
+import middlewarePipeline from "./middlewarePipeline";
+import { hasPermission } from "../permission";
 
 
 
@@ -14,12 +17,18 @@ const routes  =  [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: Home,
+    meta: {
+      middleware: [auth],
+    },
   },
   {
     path: '/account',
     name: 'Account',
-    component: Account
+    component: Account,
+    meta: {
+      middleware: [auth],
+    },
   },
   {
     path: '/signin',
@@ -29,14 +38,22 @@ const routes  =  [
     path: '/permission',
     name: 'Permission',
     component: Permission,
+    meta: {
+      middleware: [auth],
+     
+  },
     
   },
   {
     path: '/rental',
     name: 'Rental',
     component: Rental,
+    meta: {
+        middleware: [auth],
+        checkPermission: 'can.read'
+    },
     beforeEnter (to, from) {
-      console.log('Why this kolavery di');
+      // checkPermission: 'can.read'
     }
 
     
@@ -54,40 +71,40 @@ const router = createRouter({
 });
 
 
-router.beforeEach( (to, from, next) => {
-  // console.log('WHATTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT'+this.a) 
-  // console.log(router.app)
-  // console.log('this is: '+this.$router)
-  // console.log(app.config.globalProperties.$store)
-  console.log('inside before each is authenticated: '+store.getters['auth/authenticated'])
-  console.log('Route From:  '+from.fullPath)
-  console.log('Route to:  '+to.fullPath)
-  console.log('Route to Name:  '+to.name)
-  console.log('Route From Name:  '+from.fullPath)
-
-console.log('Route From:  '+from.fullPath)
-  let isAuthenticated = store.getters['auth/authenticated']
-  if (!isAuthenticated){
-    if(to.name != 'SignIn') next({ name: 'SignIn' })
-      next()
-  }else{
-    if(to.name == 'SignIn'){
-      console.log('authenticated and trying to enter sign in route')
-      next({ name: 'Home' })
-    }
-    else{
-      next()
-    }
+// router.beforeEach( (to, from, next) => {
+  // let isAuthenticated = store.getters['auth/authenticated']
+  // if (!isAuthenticated){
+  //   if(to.name != 'SignIn') next({ name: 'SignIn' })
+  //     next()
+  // }else{
+  //   if(to.name == 'SignIn'){
+  //     //authenticated and trying to enter sign in route
+  //     next({ name: 'Home' })
+  //   }
+  //   else{
+  //     next()
+  //   }
     
-  }  
-  // if the user is not authenticated, `next` is called twice
-  // async
- 
-})
+  // }  
 
+// })
+  router.beforeEach((to, from, next) => {
+   
+
+
+    const middleware = to.meta.middleware;
+    const context = { to, from, next, store };
+
+    if (!middleware) {
+      return next();
+    }
+
+    middleware[0]({
+      ...context,
+      next: middlewarePipeline(context, middleware, 1),
+    });
+  });
 
 export default router;
 
-
-// export default router
 
