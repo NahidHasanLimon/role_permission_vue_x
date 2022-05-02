@@ -1,7 +1,7 @@
 <template>
  <h6>User Permissions component {{user_id}}</h6>
  <form @submit.prevent="submit_user_permission" method="post">
-                <div class="block rounded-lg shadow-lg bg-white mb-2" v-for="permission of permissions" :key="permission.id">
+                <div class="block p-6 rounded-lg shadow-lg bg-white mb-2" v-for="permission of permissions" :key="permission.id">
                     <h6 class="text-gray-900 text-xl leading-tight font-medium mb-2 text-center"> {{permission.name}}</h6>
                     <template v-if="permission.sub_modules.length > 0"  >
                         <div class="flex justify-start">

@@ -45,7 +45,7 @@
   </table>
 </div>
 <!-- modal start here  -->
-<div v-if="showModal" class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
+<div v-if="showModal" class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none  h-modal md:h-full">
       <div class="relative w-auto my-6 mx-auto max-w-6xl">
         <!--content-->
         <div class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
@@ -62,12 +62,12 @@
             </button>
           </div>
           <!--body-->
-          <div class="relative p-6 flex-auto">
-            <div class="rounded bg-white max-w-xl rounded overflow-hidden shadow-xl">
+          <div class="relative  flex p-2">
+            <!-- <div class="rounded bg-white max-w-xl rounded overflow-hidden shadow-xl"> -->
                   <!-- content  -->
                   <UserPermission :user_id="user_id"/>
                   <!-- content  -->
-	        	</div>
+	        	<!-- </div> -->
           </div>
           <!--footer-->
           <div class="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
