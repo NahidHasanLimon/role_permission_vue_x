@@ -1,12 +1,21 @@
-import store from './store'
-export function hasPermission(...allowed){
+import store from '../store'
+export function hasPermission(allowed){
     let sp = store.getters['permission/system_permissions']
     let up = store.getters['permission/user_permissions']
+    if(sp != undefined){
+      
+    console.log('SP From Brain js: '+sp)
+    console.log('UP From Brain js: '+up)
     let final_state = false;
     let returned_result = [];
-    if(allowed.length %2 ==0 ){
+    
+    if(allowed.length < 1 ){
+      throw new TypeError("Parameter must not be empty.")
+    }
+    if(allowed.length %2 == 0 ){
       throw new TypeError("Parameter must be odd.")
     }
+    
     allowed.forEach((element,index) => {
       if( index%2 !=0){
         if((element !== 'OR') && ( element !== 'AND' )){
@@ -76,6 +85,7 @@ export function hasPermission(...allowed){
     })} else{
       final_state = returned_result [0];
     }
-    console.log('Final state is From Permission '+final_state)
+    console.log('Final state is From Brain Permission '+final_state)
     return final_state;
+}
 }

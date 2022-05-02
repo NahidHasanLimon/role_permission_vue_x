@@ -19,8 +19,12 @@
         | <router-link class="block mx-4 lg:inline-block lg:mt-0 text-cyan-200 hover:text-white mr-4" to="/permission">Permission</router-link>
       </slot>
       <!-- v-if="!$checkAccess('rem.sunt','AND','nam.eos','AND','rem.sunt')" -->
-      <slot>
+      <slot> 
+      <!-- <slot>  -->
         | <router-link class="block mx-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4" to="/rental">Rental</router-link>
+      </slot>
+      <slot>
+        | <router-link class="block mx-4 lg:inline-block lg:mt-0 text-cyan-200 hover:text-white mr-4" to="/users">Users</router-link>
       </slot>
     </div>
     <div>
@@ -30,7 +34,7 @@
     </div>
    </div>
   <!-- <div v-html="$italicHTML('whats wrong what the hell i am checking')"></div> -->
-  <!-- <div v-html="$checkAccess('rem.sunt','AND','nam.eos','AND','rem.sunt')"></div> -->
+  <div v-html="$checkAccess(['rem.sunt','AND','nam.eos','AND','rem.sunt'])"></div>
 </nav>
     <router-view/>
   </div>

@@ -68,7 +68,7 @@ export default {
     },
 
     me ({ dispatch,commit }) {
-      return axios.get('/api/user').then((response) => {
+      return axios.get('/api/auth/user').then((response) => {
         console.log(response.data);
         dispatch('permission/systemPermission', response.data.modules, { root: true })
 

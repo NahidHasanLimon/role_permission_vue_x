@@ -4,7 +4,7 @@
 
 
 <script>
-import {hasPermission} from '../permission'
+
   export default {
     name: 'Home',
     components: {
