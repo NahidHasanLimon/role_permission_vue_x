@@ -1,50 +1,26 @@
-<style scoped>
-ul >li {
+<style >
+#custom-pagination ul >li {
   display: inline !important;
 }
-.pagination .page-item.pagination-page-nav ul > li {
-  display: inline !important;
-  color: red !important;;
-}
-.pagination .page-item .pagination-page-nav ul > li {
-  display: inline !important;
-  color: red !important;;
-}
-.custom-pagination li{
+.active{
   color: red !important;
-}
-#custom-pagination li 
-{
-   display: inline-block !important;
-   padding: 0px 10px !important;
-   color: red;
-}
-#custom-pagination > .pagination > .page-item > .pagination-page-nav >ul
-{
-   display: inline-block !important;
-}
-.page-item .pagination-page-nav{
-    display:inline-block !important;
-}
-.pagination ul > li{
-   display:inline-block !important;
 }
 
-#custom-pagination .page-item.pagination-page-nav{
-  color: red !important;
-}
-li.page-item.pagination-page-nav{
-    color: red !important;
-}
-ul.pagingation{
-  color: teal;
-}
+/* .pagination .page-item .pagination-page-nav ul > li {
+  display: inline !important;
+  color: red !important;;
+} */
+
+
+
 </style>
 
 <template>
-    <h6 class="text-center">Users</h6>
+    <div class="bg-inherit">
+      <h6 class="text-center">Users List</h6>
+    </div>
    
-<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-3">
   <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
       <tr>
@@ -95,8 +71,7 @@ ul.pagingation{
     </template>
   </table>
 </div>
-<div id="custom-pagination" class="custom-pagination">
-  <h1>Chek</h1>
+<div id="custom-pagination" class="custom-pagination p-2 justify-center flex">
   <Pagination :data="users" @pagination-change-page="fetch_users" />
 
 </div>
@@ -118,7 +93,7 @@ ul.pagingation{
             </button>
           </div>
           <!--body-->
-          <div class="relative  flex p-2">
+          <div class="justify-center  flex p-1">
             <!-- <div class="rounded bg-white max-w-xl rounded overflow-hidden shadow-xl"> -->
                   <!-- content  -->
                   <UserPermission :user_id="user_id"/>
