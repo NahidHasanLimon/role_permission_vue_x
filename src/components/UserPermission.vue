@@ -46,7 +46,7 @@ export default {
     },
     mounted() {
         this.all_modules = this.permissions;
-        // this.selected_permissions = []
+        this.selected_permissions = []
     } ,
   methods: {
     toggleModal: function(){
@@ -54,20 +54,39 @@ export default {
     },
     async submit_user_permission () {
         const formData = new FormData()
-        formData.append('permissions',JSON.stringify(this.selected_permissions) );
+        // formData.append('permissions',JSON.stringify(this.selected_permissions) );
+        // formData.append('permissions',this.selected_permissions );
+        // formData.append('user_id',JSON.stringify(this.user_id) );
+
+
+        
+        axios.post('/api/user/permission',{  
+                    permissions: this.selected_permissions,  
+                    user_id: this.user_id  
+                })
+          .then(response => {
+            console.log('From submit user permission: '+response);
+            }
+          )
         //
     },
      fetch_user () {
         axios.get(`/api/user/${this.user_id}`)
           .then(response => {
-            // this.selected_permissions = response.data.user.perm 
             this.user = response.data.user
             this.user_permissions = this.user.permissions;
+            if(this.user_permissions != null){
+              this.selected_permissions = this.user_permissions;
+            }
+            
+            // this.selected_permissions = []
+            // console.log('From fetch user method: '+this.user_permissions);
             // this.selected_permissions = response.data.user.permissions 
             }
           )
         //
     },
+    
        
   },
   created (){

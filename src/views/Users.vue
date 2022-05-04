@@ -1,3 +1,46 @@
+<style scoped>
+ul >li {
+  display: inline !important;
+}
+.pagination .page-item.pagination-page-nav ul > li {
+  display: inline !important;
+  color: red !important;;
+}
+.pagination .page-item .pagination-page-nav ul > li {
+  display: inline !important;
+  color: red !important;;
+}
+.custom-pagination li{
+  color: red !important;
+}
+#custom-pagination li 
+{
+   display: inline-block !important;
+   padding: 0px 10px !important;
+   color: red;
+}
+#custom-pagination > .pagination > .page-item > .pagination-page-nav >ul
+{
+   display: inline-block !important;
+}
+.page-item .pagination-page-nav{
+    display:inline-block !important;
+}
+.pagination ul > li{
+   display:inline-block !important;
+}
+
+#custom-pagination .page-item.pagination-page-nav{
+  color: red !important;
+}
+li.page-item.pagination-page-nav{
+    color: red !important;
+}
+ul.pagingation{
+  color: teal;
+}
+</style>
+
 <template>
     <h6 class="text-center">Users</h6>
    
@@ -6,7 +49,10 @@
     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
       <tr>
         <th scope="col" class="px-6 py-3">
-        Name
+          ID
+        </th>
+        <th scope="col" class="px-6 py-3">
+          Name
         </th>
         <th scope="col" class="px-6 py-3">
         Email
@@ -22,27 +68,37 @@
         </th>
       </tr>
     </thead>
-    <tbody v-for="user in users" :key="user">
-    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700" >
-      <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
-        {{user.name}}
-      </th>
-        <td class="px-6 py-4">
-        {{user.email}}
-        </td>
-        <td class="px-6 py-4">
-        {{user.permissions}}
-        </td>
-        <!-- <td class="px-6 py-4">
-        {{user.created_at}}
-        </td> -->
-        <td class="px-6 py-4 text-right">
-        <button @click="open_permission_modal(user.id)" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</button>
-        <!-- <UserPermission :user_id="user.id"/> -->
-        </td>
-    </tr>
+    <template v-if="users">
+       <tbody  v-for="user in users.data" :key="user.id">
+          <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700" >
+            <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
+              {{user.id}}
+            </th>
+            <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
+              {{user.name}}
+            </th>
+              <td class="px-6 py-4">
+                {{user.email}}
+              </td>
+              <td class="px-6 py-4">
+                {{user.permissions}}
+              </td>
+              <!-- <td class="px-6 py-4">
+              {{user.created_at}}
+              </td> -->
+              <td class="px-6 py-4 text-right">
+                <button @click="open_permission_modal(user.id)" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</button>
+              <!-- <UserPermission :user_id="user.id"/> -->
+              </td>
+          </tr>
     </tbody>
+    </template>
   </table>
+</div>
+<div id="custom-pagination" class="custom-pagination">
+  <h1>Chek</h1>
+  <Pagination :data="users" @pagination-change-page="fetch_users" />
+
 </div>
 <!-- modal start here  -->
 <div v-if="showModal" class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none  h-modal md:h-full">
@@ -87,29 +143,34 @@
 <script>
 import axios from "axios"
 import UserPermission from "../components/UserPermission.vue"
+import LaravelVuePagination from 'laravel-vue-pagination';
+
   export default {
     name: 'Home',
     components: {
-      UserPermission
+      UserPermission,
+     'Pagination': LaravelVuePagination
     },
     data(){
       return {
-        users: '',
+        users: {},
         user_id: '',
         showModal: false,
       }
     },
 
     mounted(){
-        
+        //  this.fetch_users();
     },
     methods: {
-       fetch_users: function(){
-      //  function fetch_users{
-        axios
-          .get('/api/user')
+       fetch_users: function(page = 1){
+        //  if (typeof page === 'undefined') {
+        //       page = 1;
+        //   }
+        // axios.get(`/api/user?page=' + page`)
+         axios.get('api/user?page=' + page)
           .then(response => (
-            this.users = response.data.users 
+            this.users = response.data.users
             )
           )
       },
@@ -128,8 +189,8 @@ import UserPermission from "../components/UserPermission.vue"
     },
     created (){
         console.log('User Component')
+       
         this.fetch_users();
-        
     },
 
   }
