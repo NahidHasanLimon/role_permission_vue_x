@@ -59,6 +59,7 @@ export default {
                 })
           .then(response => {
             console.log('From submit user permission: '+response.data.user.permissions);
+            this.$swal('Permission updated');
              this.$emit('refreshUser', response.data.user);
             }
           )

@@ -94,6 +94,7 @@ export default {
         if(response.data.success){
               this.toggleModal()
               this.$emit('custom_event','refreshPermissions')
+              this.$swal('Added');
           }
           }).catch((e) => {
           if(e.response.status){

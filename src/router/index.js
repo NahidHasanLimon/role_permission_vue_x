@@ -4,7 +4,7 @@ import Home from '../views/Home.vue'
 import SignIn from '../views/SignIn.vue'
 import Account from '../views/Account.vue'
 import Permission from '../views/Permission.vue'
-import Rental from '../views/Rental.vue'
+import TestAccess from '../views/TestAccess.vue'
 import Users from '../views/Users.vue'
 import NotFound from '../views/NotFound.vue'
 import store from '../store'
@@ -47,9 +47,9 @@ const routes  =  [
     
   },
   {
-    path: '/rental',
-    name: 'Rental',
-    component: Rental,
+    path: '/test-access',
+    name: 'TestAccess',
+    component: TestAccess,
     meta: {
         middleware: [auth],
     },

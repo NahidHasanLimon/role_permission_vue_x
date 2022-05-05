@@ -1,12 +1,13 @@
 <template>
-    <h6 class="text-center">Rental Page</h6>
+    <h6 class="text-center">Test Page</h6>
+    <p>This page is designed for checking global function and app instance! To create permission basis route and element. </p>
 </template>
 
 
 <script>
 
   export default {
-    name: 'Home',
+    name: 'TestAccess',
     components: {
       //
     },

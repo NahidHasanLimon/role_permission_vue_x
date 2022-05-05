@@ -53,7 +53,7 @@
                 {{user.permissions}}
               </td>
               <td class="px-6 py-4 text-right">
-                <button @click="openPermissionModal(user.id)" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</button>
+                <button @click="openPermissionModal(user.id,user.name)" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Permission</button>
               </td>
           </tr>
     </tbody>
@@ -78,7 +78,7 @@
             </button>
           </div>
             <div class="justify-center">
-              <h3 class="text-3xl font-semibold text-center"> User Permissions</h3>
+              <h4 class="text-3xl font-semibold text-center"> User Permissions [{{user_name}}]</h4>
             </div>
           <!--body-->
           <div class="justify-center  flex p-1">
@@ -130,9 +130,10 @@ import LaravelVuePagination from 'laravel-vue-pagination';
             )
           )
       },
-      openPermissionModal: function(user_id){
+      openPermissionModal: function(user_id,user_name){
          console.log('clicked for open modal');
          this.user_id = user_id;
+         this.user_name = user_name;
          this.toggleModal()
       },
        toggleModal: function(){

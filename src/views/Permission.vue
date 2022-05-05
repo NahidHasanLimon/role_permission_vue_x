@@ -53,6 +53,9 @@ import AddPermissionModule from '../components/AddPermissionModule.vue';
  
     } ,
      methods: {
+        ...mapActions({
+        me: 'auth/me'
+      }),
        refreshPermissions(){
          console.log('From Refresh Permissions')
           this.me()
