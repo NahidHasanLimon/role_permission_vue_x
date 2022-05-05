@@ -6,21 +6,14 @@
   color: red !important;
 }
 
-/* .pagination .page-item .pagination-page-nav ul > li {
-  display: inline !important;
-  color: red !important;;
-} */
-
-
-
 </style>
 
 <template>
-    <div class="bg-inherit">
+    <div class="bg-inherit p-6">
       <h6 class="text-center">Users List</h6>
     </div>
    
-<div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-3">
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg justify-center align-middle  m-3">
   <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
       <tr>
@@ -31,10 +24,10 @@
           Name
         </th>
         <th scope="col" class="px-6 py-3">
-        Email
+          Email
         </th>
         <th scope="col" class="px-6 py-3">
-        Permissions
+          Permissions
         </th>
         <!-- <th scope="col" class="px-6 py-3">
         Added at
@@ -59,12 +52,8 @@
               <td class="px-6 py-4">
                 {{user.permissions}}
               </td>
-              <!-- <td class="px-6 py-4">
-              {{user.created_at}}
-              </td> -->
               <td class="px-6 py-4 text-right">
-                <button @click="open_permission_modal(user.id)" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</button>
-              <!-- <UserPermission :user_id="user.id"/> -->
+                <button @click="openPermissionModal(user.id)" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</button>
               </td>
           </tr>
     </tbody>
@@ -72,7 +61,7 @@
   </table>
 </div>
 <div id="custom-pagination" class="custom-pagination p-2 justify-center flex">
-  <Pagination :data="users" @pagination-change-page="fetch_users" />
+  <Pagination :data="users" @pagination-change-page="fetchUser" />
 
 </div>
 <!-- modal start here  -->
@@ -81,27 +70,22 @@
         <!--content-->
         <div class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
           <!--header-->
-          <div class="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
-            <h3 class="text-3xl font-semibold">
-             User Permissions {{user_id}}
-            </h3>
-            
-            <button class="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none" v-on:click="toggleModal()">
-              <span class="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
+          <div class="flex items-start justify-between p-2 border-b border-solid border-slate-200 rounded-t ">
+            <button class="p-1 ml-auto bg-transparent border-0 text-black float-right text-3xl leading-none font-semibold outline-none focus:outline-none" v-on:click="toggleModal()">
+              <span class="bg-transparent text-red h-6 w-6 text-2xl block outline-none focus:outline-none">
                 ×
-              </span>
+              </span> 
             </button>
           </div>
+            <div class="justify-center">
+              <h3 class="text-3xl font-semibold text-center"> User Permissions</h3>
+            </div>
           <!--body-->
           <div class="justify-center  flex p-1">
-            <!-- <div class="rounded bg-white max-w-xl rounded overflow-hidden shadow-xl"> -->
-                  <!-- content  -->
-                  <UserPermission :user_id="user_id"/>
-                  <!-- content  -->
-	        	<!-- </div> -->
+                  <UserPermission :user_id="user_id" @refreshUser="refreshUser"/>
           </div>
           <!--footer-->
-          <div class="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
+          <div class="flex items-center justify-end p-2 border-t border-solid border-slate-200 rounded-b">
             <button class="text-red-500 bg-transparent border border-solid border-red-500 hover:bg-red-500 hover:text-white active:bg-red-600 font-bold uppercase text-sm px-6 py-3 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" v-on:click="toggleModal()">
               Close
             </button>
@@ -120,6 +104,7 @@ import axios from "axios"
 import UserPermission from "../components/UserPermission.vue"
 import LaravelVuePagination from 'laravel-vue-pagination';
 
+
   export default {
     name: 'Home',
     components: {
@@ -135,37 +120,35 @@ import LaravelVuePagination from 'laravel-vue-pagination';
     },
 
     mounted(){
-        //  this.fetch_users();
+        //  this.fetchUser(); we can use mounted or created both for api fetching on the beginning
     },
     methods: {
-       fetch_users: function(page = 1){
-        //  if (typeof page === 'undefined') {
-        //       page = 1;
-        //   }
-        // axios.get(`/api/user?page=' + page`)
+       fetchUser: function(page = 1){
          axios.get('api/user?page=' + page)
           .then(response => (
             this.users = response.data.users
             )
           )
       },
-      open_permission_modal: function(user_id){
+      openPermissionModal: function(user_id){
          console.log('clicked for open modal');
          this.user_id = user_id;
          this.toggleModal()
-
       },
        toggleModal: function(){
       this.showModal = !this.showModal;
     },
-      get_permission(){
-
+      refreshUser(user){
+        this.users.data.find((item)=>{
+          if(item.id == user.id){
+            item.permissions = user.permissions
+          }
+        })
       }
     },
     created (){
         console.log('User Component')
-       
-        this.fetch_users();
+        this.fetchUser();
     },
 
   }

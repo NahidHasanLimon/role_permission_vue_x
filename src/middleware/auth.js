@@ -4,6 +4,8 @@ export default function auth({ next, router,store }) {
     let isAuthenticated = store.getters['auth/authenticated']
     if (!isAuthenticated){
         next({ name: 'SignIn' })
+        return
     }
     next()
+    return
   }

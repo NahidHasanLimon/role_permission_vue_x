@@ -34,7 +34,7 @@
     </div>
    </div>
   <!-- <div v-html="$italicHTML('whats wrong what the hell i am checking')"></div> -->
-  <div v-html="$checkAccess(['rem.sunt','AND','nam.eos','AND','rem.sunt'])"></div>
+  <!-- <div v-html="$checkAccess(['rem.sunt','AND','nam.eos','AND','rem.sunt'])"></div> -->
 </nav>
     <router-view/>
   </div>
