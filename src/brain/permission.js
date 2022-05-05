@@ -3,23 +3,18 @@ export function hasPermission(allowed){
     let sp = store.getters['permission/system_permissions']
     let up = store.getters['permission/user_permissions']
     if(sp != undefined){
-      
-    console.log('SP From Brain js: '+sp)
-    console.log('UP From Brain js: '+up)
     let final_state = false;
     let returned_result = [];
-    
     if(allowed.length < 1 ){
       throw new TypeError("Parameter must not be empty.")
     }
     if(allowed.length %2 == 0 ){
-      throw new TypeError("Parameter must be odd.")
-    }
-    
+      throw new TypeError("Number of parameter must be odd.")
+    }   
     allowed.forEach((element,index) => {
       if( index%2 !=0){
         if((element !== 'OR') && ( element !== 'AND' )){
-          throw new TypeError("Method parameter order not correct.")
+          throw new TypeError("Parameter order not correct.")
         }
       }
       let found_sub_module = false;

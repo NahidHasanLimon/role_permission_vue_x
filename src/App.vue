@@ -33,8 +33,7 @@
       </template>
     </div>
    </div>
-  <!-- <div v-html="$italicHTML('whats wrong what the hell i am checking')"></div> -->
-  <div v-html="$canAccess(['rem.sunt','OR','nam.eos','OR','rem.sunt'])"></div>
+  
 </nav>
     <router-view/>
   </div>

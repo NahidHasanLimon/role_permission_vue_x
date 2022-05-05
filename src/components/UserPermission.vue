@@ -25,6 +25,7 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import axios from 'axios'
+import { EMPTY_ARR } from '@vue/shared';
 export default {
   props: ['user_id'],
   data() {
@@ -39,7 +40,6 @@ export default {
    computed: {
       ...mapGetters({
         permissions: 'permission/system_permissions',
-        // user_permissions: 'permission/user_permissions',
       }),
       
     },
@@ -53,6 +53,10 @@ export default {
     },
     async submitUserPermission () {
         const formData = new FormData()
+        if(this.selected_permissions == null ||  this.selected_permissions.length === 0 ){
+          this.$swal('error','Atleast select one permission');
+          return;
+        }
         axios.post('/api/user/permission',{  
                     permissions: this.selected_permissions,  
                     user_id: this.user_id  

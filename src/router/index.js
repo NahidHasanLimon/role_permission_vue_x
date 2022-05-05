@@ -54,7 +54,7 @@ const routes  =  [
         middleware: [auth],
     },
     beforeEnter (to, from) {
-      return hasPermission(['facere.yes','OR','can.read'])
+      // return hasPermission(['facere.yes','OR','can.read']) // you can use and feel free to adapt parameter
     }
 
     
