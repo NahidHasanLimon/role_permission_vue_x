@@ -33,4 +33,5 @@ suppose you have an route that leads to "product" page or section. but if logged
 ##### [/permission](/permission) 
 ##### [/users](/users)
 ##### [/test-access ](/test-access)
+##### [/profile ](/profile)
 
