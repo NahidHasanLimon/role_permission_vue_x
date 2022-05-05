@@ -1,5 +1,5 @@
 // import Vue from 'vue'
-import {createWebHistory, createRouter} from "vue-router";
+import {createWebHistory, createRouter as createVueRouter} from "vue-router";
 import Home from '../views/Home.vue'
 import SignIn from '../views/SignIn.vue'
 import Account from '../views/Account.vue'
@@ -15,7 +15,7 @@ import permission from "../store/permission";
 
 
 
-const routes  =  [
+const routes  = (app) => [
   {
     path: '/',
     name: 'Home',
@@ -56,8 +56,6 @@ const routes  =  [
     beforeEnter (to, from) {
       return hasPermission(['facere.yes','OR','can.read'])
     }
-
-    
     
   }, 
    {
@@ -68,24 +66,20 @@ const routes  =  [
         middleware: [auth],
     },  
   },
-
-
-
-
   {
     path: '/:pathMatch(.*)*',
     name: 'NotFound', component: NotFound 
   }
 ]
-const router = createRouter({
-    history: createWebHistory(),
-    routes: routes,
-    
-});
 
+// here 
+export const createRouter = (app) => {
+  const router =  createVueRouter({
+    history: createWebHistory(),
+    routes: routes(app),
+  })
   router.beforeEach((to, from, next) => {
     if (to.meta.middleware) {
-      // console.log('to.meta');
       const middleware = Array.isArray(to.meta.middleware)
         ? to.meta.middleware
         : [to.meta.middleware];
@@ -104,10 +98,10 @@ const router = createRouter({
     }else{
       
     }
-   
-    return next();
-   });
-
-export default router;
+    return next()
+   })
+  // end of before each 
+  return router;
+}
 
 

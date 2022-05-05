@@ -1,5 +1,5 @@
 import { createApp } from 'vue'
-import router from './router'
+import {router} from './router'
 import store from './store'
 import App from './App.vue'
 import access from './access'
@@ -15,7 +15,7 @@ axios.defaults.baseURL = 'http://localhost:8000/'
 store.dispatch('auth/me').then(() => {
     const app = createApp(App)
     app.use(store)
-    app.use(router)
+    app.use(router,createApp)
     app.use(access)
     app.use(VueSweetalert2)
     app.mount('#app')
