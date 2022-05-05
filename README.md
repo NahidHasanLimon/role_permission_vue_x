@@ -1,4 +1,13 @@
 # RoleAndPermissonPanel
+## Technology
+### Frontend 
+- Vue 3
+- Vue Router 4
+- Vue X
+- Tailwind
+### Backend
+- Laravel 9 
+- Sanctum SPA for Auth
 ## Features
 
 
@@ -25,10 +34,3 @@ suppose you have an route that leads to "product" page or section. but if logged
 ##### [/users](/users)
 ##### [/test-access ](/test-access)
 
-### Used Technology Frontend 
-- Vue 3
-- Vue Router
-- Vue X
-### Used Technology Backend
-- Laravel 9 
-- Sanctum SPA for Auth
